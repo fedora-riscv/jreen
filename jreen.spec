@@ -1,8 +1,8 @@
 
 Name:    jreen
 Summary: Qt XMPP Library
-Version: 1.0.1
-Release: 4%{?dist}
+Version: 1.0.4
+Release: 1%{?dist}
  
 License: GPLv2+
 URL:     http://qutim.org/jreen
@@ -12,11 +12,10 @@ URL:     http://qutim.org/jreen
 # git archive --prefix=jreen-1.0.1/ v1.0.1 | xz > ../jreen-1.0.1.tar.xz
 #Source0: jreen-%{version}.tar.xz
 %else
-Source0: http://qutim.org/dwnl/18/libjreen-%{version}.tar.bz2
+Source0: http://qutim.org/dwnl/31/libjreen-%{version}.tar.bz2
 %endif
 
 ## upstream patches
-Patch100: jreen-1.0.1-gcc47.patch 
 
 BuildRequires: cmake
 BuildRequires: pkgconfig(libidn)
@@ -40,8 +39,6 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %prep
 %setup -q -n libjreen-%{version}
 
-%patch100 -p1 -b .gcc47
-
 # nuke bundled libs out of paranoia -- rex
 rm -rfv 3rdparty/*
 
@@ -54,7 +51,7 @@ pushd %{_target_platform}
   ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform} -k
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
@@ -80,6 +77,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Wed Mar 28 2012 Rex Dieter <rdieter@fedoraproject.org> 1.0.4-1
+- jreen-1.0.4 (#807634)
+
 * Sat Jan 07 2012 Rex Dieter <rdieter@fedoraproject.org> 1.0.1-4
 - upstream gcc47 patch
 
