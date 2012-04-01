@@ -1,7 +1,7 @@
 
 Name:    jreen
 Summary: Qt XMPP Library
-Version: 1.0.4
+Version: 1.0.5
 Release: 1%{?dist}
  
 License: GPLv2+
@@ -12,7 +12,7 @@ URL:     http://qutim.org/jreen
 # git archive --prefix=jreen-1.0.1/ v1.0.1 | xz > ../jreen-1.0.1.tar.xz
 #Source0: jreen-%{version}.tar.xz
 %else
-Source0: http://qutim.org/dwnl/31/libjreen-%{version}.tar.bz2
+Source0: http://qutim.org/dwnl/33/libjreen-%{version}.tar.bz2
 %endif
 
 ## upstream patches
@@ -77,6 +77,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Sun Apr 01 2012 Rex Dieter <rdieter@fedoraproject.org> 1.0.5-1
+- jreen-1.0.5 (#807634)
+
 * Wed Mar 28 2012 Rex Dieter <rdieter@fedoraproject.org> 1.0.4-1
 - jreen-1.0.4 (#807634)
 
