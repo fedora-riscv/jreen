@@ -1,7 +1,7 @@
 
 Name:    jreen
 Summary: Qt XMPP Library
-Version: 1.0.5
+Version: 1.1.0
 Release: 1%{?dist}
  
 License: GPLv2+
@@ -12,7 +12,7 @@ URL:     http://qutim.org/jreen
 # git archive --prefix=jreen-1.0.1/ v1.0.1 | xz > ../jreen-1.0.1.tar.xz
 #Source0: jreen-%{version}.tar.xz
 %else
-Source0: http://qutim.org/dwnl/33/libjreen-%{version}.tar.bz2
+Source0: http://qutim.org/dwnl/39/libjreen-%{version}.tar.bz2
 %endif
 
 ## upstream patches
@@ -40,7 +40,9 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %setup -q -n libjreen-%{version}
 
 # nuke bundled libs out of paranoia -- rex
-rm -rfv 3rdparty/*
+rm -rfv 3rdparty/{jdns,simplesasl}
+# one header is used, could patch to use system iris header -- rex
+rm -fv  3rdparty/icesupport/*.cpp
 
 
 %build
@@ -48,6 +50,7 @@ mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake} \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
+  -DJREEN_USE_IRISICE:BOON=OFF \
   ..
 popd
 
@@ -77,6 +80,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Mon Apr 23 2012 Rex Dieter <rdieter@fedoraproject.org> 1.1.0-1
+- jreen-1.1.0
+
 * Sun Apr 01 2012 Rex Dieter <rdieter@fedoraproject.org> 1.0.5-1
 - jreen-1.0.5 (#807634)
 
