@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt XMPP Library
 Version: 1.1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
  
 License: GPLv2+
 URL:     http://qutim.org/jreen
@@ -80,6 +80,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
