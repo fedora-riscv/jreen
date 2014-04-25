@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt XMPP Library
 Version: 1.1.1
-Release: 4%{?dist}
+Release: 5%{?dist}
  
 License: GPLv2+
 URL:     http://qutim.org/jreen
@@ -16,6 +16,12 @@ Source0: http://qutim.org/dwnl/44/libjreen-%{version}.tar.bz2
 %endif
 
 ## upstream patches
+
+## upstreamable patches
+# fix build with recent cmake/moc handling
+# inspired by https://bbs.archlinux.org/viewtopic.php?id=171303
+Patch50: libjreen-1.1.1-moc.patch
+
 
 BuildRequires: cmake
 BuildRequires: pkgconfig(libidn)
@@ -38,6 +44,8 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
  
 %prep
 %setup -q -n libjreen-%{version}
+
+%patch50 -p1 -b .moc
 
 # nuke bundled libs out of paranoia -- rex
 rm -rfv 3rdparty/{jdns,simplesasl}
@@ -80,6 +88,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Fri Apr 25 2014 Rex Dieter <rdieter@fedoraproject.org> 1.1.1-5
+- fix build with recent cmake/moc handling
+
 * Fri Apr 25 2014 Rex Dieter <rdieter@fedoraproject.org> 1.1.1-4
 - rebuild (qjdns)
 
