@@ -1,8 +1,8 @@
 
 Name:    jreen
-Summary: Qt XMPP Library
+Summary: Qt4 XMPP Library
 Version: 1.2.0
-Release: 1%{?dist}
+Release: 2%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -21,6 +21,7 @@ BuildRequires: libidn-devel
 BuildRequires: pkgconfig(libgsasl)
 BuildRequires: pkgconfig(qjdns)
 BuildRequires: pkgconfig(QtNetwork) 
+BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(speex)
 BuildRequires: zlib-devel
 
@@ -34,6 +35,18 @@ Requires: libidn%{?_isa}
 Summary:  Development files for %{name} 
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %description devel
+%{summary}.
+
+%package qt5
+Summary: Qt5 XMPP Library
+Requires: %{name}%{?_isa} = %{version}-%{release}
+%description qt5
+%{summary}.
+
+%package qt5-devel
+Summary:  Development files for %{name}-qt5
+Requires: %{name}-qt5%{?_isa} = %{version}-%{release}
+%description qt5-devel
 %{summary}.
  
  
@@ -55,11 +68,22 @@ pushd %{_target_platform}
   ..
 popd
 
+mkdir -p %{_target_platform}-qt5
+pushd %{_target_platform}-qt5
+%{cmake} \
+  -DJREEN_FORCE_QT4:BOOL=OFF \
+  -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
+  -DJREEN_USE_IRISICE:BOON=ON \
+  ..
+popd
+
 make %{?_smp_mflags} -C %{_target_platform}
+make %{?_smp_mflags} -C %{_target_platform}-qt5
 
 
 %install
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+make install/fast DESTDIR=%{buildroot} -C %{_target_platform}-qt5
 
 
 %check
@@ -73,14 +97,30 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 %files 
 %doc AUTHORS ChangeLog COPYING README
 %{_libdir}/libjreen.so.1*
- 
+
 %files devel
 %{_includedir}/jreen-qt4/
 %{_libdir}/libjreen.so
 %{_libdir}/pkgconfig/libjreen.pc
+
+%post qt5 -p /sbin/ldconfig
+%postun qt5 -p /sbin/ldconfig
+
+%files qt5
+%doc AUTHORS ChangeLog COPYING README
+%{_libdir}/libjreen-qt5.so.1*
+
+%files qt5-devel
+%{_includedir}/jreen-qt5/
+%{_libdir}/libjreen-qt5.so
+%{_libdir}/pkgconfig/libjreen-qt5.pc
+
  
 
 %changelog
+* Tue May 13 2014 Rex Dieter <rdieter@fedoraproject.org> 1.2.0-2
+- add Qt5 support, qt5/qt5-devel subpkgs
+
 * Tue May 13 2014 Rex Dieter <rdieter@fedoraproject.org> 1.2.0-1
 - jreen-1.2.0 (#1097347)
 
