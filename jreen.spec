@@ -1,36 +1,27 @@
 
 Name:    jreen
 Summary: Qt XMPP Library
-Version: 1.1.1
-Release: 5%{?dist}
+Version: 1.2.0
+Release: 1%{?dist}
  
 License: GPLv2+
-URL:     http://qutim.org/jreen
-#URL:     https://github.com/euroelessar/jreen
+#URL:     http://qutim.org/jreen
+URL:     https://github.com/euroelessar/jreen
 %if 0%{?snap}
 # git clone git://github.com/euroelessar/jreen.git ; cd jreen
 # git archive --prefix=jreen-1.0.1/ v1.0.1 | xz > ../jreen-1.0.1.tar.xz
 #Source0: jreen-%{version}.tar.xz
 %else
-Source0: http://qutim.org/dwnl/44/libjreen-%{version}.tar.bz2
+#Source0: http://qutim.org/dwnl/44/libjreen-%{version}.tar.bz2
+Source0: https://github.com/euroelessar/jreen/archive/v%{version}.tar.gz
 %endif
-
-## upstream patches
-
-## upstreamable patches
-# fix build with recent cmake/moc handling
-# inspired by https://bbs.archlinux.org/viewtopic.php?id=171303
-Patch50: libjreen-1.1.1-moc.patch
-
 
 BuildRequires: cmake
 BuildRequires: pkgconfig(libidn)
-BuildRequires: pkgconfig(qca2)
+BuildRequires: pkgconfig(libgsasl)
 BuildRequires: pkgconfig(qjdns)
 BuildRequires: pkgconfig(QtNetwork) 
 BuildRequires: zlib-devel
-
-Requires: qca-ossl%{?_isa}
 
 %description
 %{summary}.
@@ -43,22 +34,20 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
  
  
 %prep
-%setup -q -n libjreen-%{version}
-
-%patch50 -p1 -b .moc
+%setup -q -n jreen-%{version}
 
 # nuke bundled libs out of paranoia -- rex
 rm -rfv 3rdparty/{jdns,simplesasl}
 # one header is used, could patch to use system iris header -- rex
 rm -fv  3rdparty/icesupport/*.cpp
 
-
 %build
 mkdir -p %{_target_platform}
 pushd %{_target_platform}
 %{cmake} \
+  -DJREEN_FORCE_QT4:BOOL=ON \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  -DJREEN_USE_IRISICE:BOON=OFF \
+  -DJREEN_USE_IRISICE:BOON=ON \
   ..
 popd
 
@@ -82,12 +71,15 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 %{_libdir}/libjreen.so.1*
  
 %files devel
-%{_includedir}/jreen/
+%{_includedir}/jreen-qt4/
 %{_libdir}/libjreen.so
 %{_libdir}/pkgconfig/libjreen.pc
  
 
 %changelog
+* Tue May 13 2014 Rex Dieter <rdieter@fedoraproject.org> 1.2.0-1
+- jreen-1.2.0 (#1097347)
+
 * Fri Apr 25 2014 Rex Dieter <rdieter@fedoraproject.org> 1.1.1-5
 - fix build with recent cmake/moc handling
 
