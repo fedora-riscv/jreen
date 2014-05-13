@@ -19,7 +19,7 @@ Source0: https://github.com/euroelessar/jreen/archive/v%{version}.tar.gz
 BuildRequires: cmake
 BuildRequires: pkgconfig(libidn)
 BuildRequires: pkgconfig(libgsasl)
-BuildRequires: pkgconfig(qjdns)
+BuildRequires: pkgconfig(jdns)
 BuildRequires: pkgconfig(QtNetwork) 
 BuildRequires: zlib-devel
 
