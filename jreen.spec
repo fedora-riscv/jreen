@@ -17,11 +17,15 @@ Source0: https://github.com/euroelessar/jreen/archive/v%{version}.tar.gz
 %endif
 
 BuildRequires: cmake
-BuildRequires: pkgconfig(libidn)
+BuildRequires: libidn-devel
 BuildRequires: pkgconfig(libgsasl)
 BuildRequires: pkgconfig(jdns)
 BuildRequires: pkgconfig(QtNetwork) 
+BuildRequires: pkgconfig(speex)
 BuildRequires: zlib-devel
+
+# apparently dlopens libidn
+Requires: libidn%{?_isa}
 
 %description
 %{summary}.
