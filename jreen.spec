@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 1%{?dist}
+Release: 2%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -66,7 +66,7 @@ pushd %{_target_platform}
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=ON \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  -DJREEN_USE_IRISICE:BOON=ON \
+  -DJREEN_USE_IRISICE:BOOL=ON \
   ..
 popd
 
@@ -76,7 +76,7 @@ pushd %{_target_platform}-qt5
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=OFF \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  -DJREEN_USE_IRISICE:BOON=ON \
+  -DJREEN_USE_IRISICE:BOOL=ON \
   ..
 popd
 
@@ -123,6 +123,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-2
+- s/BOON/BOOL/ typos
+
 * Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-1
 - 1.2.1, %%build: -DCMAKE_BUILD_TYPE=Release, use %%license
 
