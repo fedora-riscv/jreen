@@ -1,8 +1,8 @@
 
 Name:    jreen
 Summary: Qt4 XMPP Library
-Version: 1.2.0
-Release: 6%{?dist}
+Version: 1.2.1
+Release: 1%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -58,19 +58,22 @@ rm -rfv 3rdparty/{jdns,simplesasl}
 # one header is used, could patch to use system iris header -- rex
 rm -fv  3rdparty/icesupport/*.cpp
 
+
 %build
-mkdir -p %{_target_platform}
+mkdir %{_target_platform}
 pushd %{_target_platform}
 %{cmake} \
+  -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=ON \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
   -DJREEN_USE_IRISICE:BOON=ON \
   ..
 popd
 
-mkdir -p %{_target_platform}-qt5
+mkdir %{_target_platform}-qt5
 pushd %{_target_platform}-qt5
 %{cmake} \
+  -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=OFF \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
   -DJREEN_USE_IRISICE:BOON=ON \
@@ -95,7 +98,8 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 %postun -p /sbin/ldconfig
  
 %files 
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog README.md
+%license COPYING
 %{_libdir}/libjreen.so.1*
 
 %files devel
@@ -107,7 +111,8 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 %postun qt5 -p /sbin/ldconfig
 
 %files qt5
-%doc AUTHORS ChangeLog COPYING README
+%doc AUTHORS ChangeLog README.md
+%license COPYING
 %{_libdir}/libjreen-qt5.so.1*
 
 %files qt5-devel
@@ -118,6 +123,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-1
+- 1.2.1, %%build: -DCMAKE_BUILD_TYPE=Release, use %%license
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
