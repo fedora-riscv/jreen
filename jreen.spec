@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 2%{?dist}
+Release: 3%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -123,6 +123,9 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
  
 
 %changelog
+* Mon Nov 02 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-3
+- rebuild (qjdns)
+
 * Mon Jun 22 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-2
 - s/BOON/BOOL/ typos
 
