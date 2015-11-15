@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 3%{?dist}
+Release: 4%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -15,6 +15,17 @@ URL:     https://github.com/euroelessar/jreen
 #Source0: http://qutim.org/dwnl/44/libjreen-%{version}.tar.bz2
 Source0: https://github.com/euroelessar/jreen/archive/v%{version}.tar.gz
 %endif
+
+Patch2: 0002-Added-ability-to-listen-to-ChatStates-in-MUC.patch
+Patch3: 0003-Use-QSsl-SecureProtocols-instead-of-QSsl-TlsV1.patch
+Patch4: 0004-Added-JREEN_EXPORT-to-entitytime.h.patch
+Patch5: 0005-Fixed-invites-in-MUC.patch
+Patch6: 0006-Changed-query-to-x.patch
+Patch7: 0007-Fixed-parsing-of-time-with-milliseconds-in-UTC-forma.patch
+Patch8: 0008-Tiny-fix-removed-obsolete-comment.patch
+
+## upstreamable patches
+Patch100: jreen-1.2.1-no_undefined.patch
 
 BuildRequires: cmake
 BuildRequires: libidn-devel
@@ -51,12 +62,10 @@ Requires: %{name}-qt5%{?_isa} = %{version}-%{release}
  
  
 %prep
-%setup -q -n jreen-%{version}
+%autosetup -n jreen-%{version} -p1
 
 # nuke bundled libs out of paranoia -- rex
 rm -rfv 3rdparty/{jdns,simplesasl}
-# one header is used, could patch to use system iris header -- rex
-rm -fv  3rdparty/icesupport/*.cpp
 
 
 %build
@@ -66,7 +75,6 @@ pushd %{_target_platform}
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=ON \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  -DJREEN_USE_IRISICE:BOOL=ON \
   ..
 popd
 
@@ -76,7 +84,6 @@ pushd %{_target_platform}-qt5
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=OFF \
   -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  -DJREEN_USE_IRISICE:BOOL=ON \
   ..
 popd
 
@@ -92,6 +99,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}-qt5
 %check
 export PKG_CONFIG_PATH=%{buildroot}%{_datadir}/pkgconfig:%{buildroot}%{_libdir}/pkgconfig
 test "$(pkg-config --modversion libjreen)" = "%{version}"
+test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
 %post -p /sbin/ldconfig
@@ -121,8 +129,12 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 %{_libdir}/pkgconfig/libjreen-qt5.pc
 
  
-
 %changelog
+* Sun Nov 15 2015 Rex Dieter <rdieter@fedoraproject.org> 
+- 1.2.1-4
+- drop JREEN_USE_IRISICE=ON, needs work (missing headers/symbols) (#1282176)
+- pull in upstream fixes
+
 * Mon Nov 02 2015 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-3
 - rebuild (qjdns)
 
