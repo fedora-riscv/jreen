@@ -1,0 +1,27 @@
+From 3339bc50a5693ab9dbf2b34753efbe973e248961 Mon Sep 17 00:00:00 2001
+From: Nicolay Izoderov <nico-izo@ya.ru>
+Date: Tue, 18 Aug 2015 21:24:02 +0300
+Subject: [PATCH 5/8] Fixed invites in MUC
+
+---
+ src/mucroom.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/mucroom.cpp b/src/mucroom.cpp
+index 48c0f66..c9c9d88 100644
+--- a/src/mucroom.cpp
++++ b/src/mucroom.cpp
+@@ -454,7 +454,9 @@ void MUCRoom::invite(const JID &jid, const QString &reason, const QString &threa
+ 	Q_D(MUCRoom);
+ 	if (!d->isJoined || !d->client)
+ 		return;
+-	Message message(Message::Normal, jid);
++	// According to XEP-0045, we should use mediated invites
++	// so we should send message with invite to the conference
++	Message message(Message::Normal, id());
+ 	message.addExtension(new MUCRoomUserQuery(MUCRoomUserQuery::Invite, jid, reason, thread));
+ 	d_func()->client->send(message);
+ }
+-- 
+2.5.0
+

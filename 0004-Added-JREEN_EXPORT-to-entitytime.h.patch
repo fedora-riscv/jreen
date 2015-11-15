@@ -1,0 +1,25 @@
+From f8a79f1153b454052df3acb8eae336683e66316b Mon Sep 17 00:00:00 2001
+From: Nicolay Izoderov <nico-izo@ya.ru>
+Date: Tue, 4 Aug 2015 01:14:35 +0300
+Subject: [PATCH 4/8] Added JREEN_EXPORT to entitytime.h
+
+---
+ src/entitytime.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/entitytime.h b/src/entitytime.h
+index c39f2b5..2e478d6 100644
+--- a/src/entitytime.h
++++ b/src/entitytime.h
+@@ -32,7 +32,7 @@
+ namespace Jreen
+ {
+ 	class EntityTimePrivate;
+-	class EntityTime : public Payload
++	class JREEN_EXPORT EntityTime : public Payload
+ 	{
+ 		J_PAYLOAD(Jreen::EntityTime)
+ 		Q_DECLARE_PRIVATE(EntityTime)
+-- 
+2.5.0
+

@@ -22,7 +22,6 @@ Patch4: 0004-Added-JREEN_EXPORT-to-entitytime.h.patch
 Patch5: 0005-Fixed-invites-in-MUC.patch
 Patch6: 0006-Changed-query-to-x.patch
 Patch7: 0007-Fixed-parsing-of-time-with-milliseconds-in-UTC-forma.patch
-Patch8: 0008-Tiny-fix-removed-obsolete-comment.patch
 
 ## upstreamable patches
 Patch100: jreen-1.2.1-no_undefined.patch

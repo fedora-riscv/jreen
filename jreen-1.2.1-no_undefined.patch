@@ -1,0 +1,11 @@
+diff -up jreen-1.2.1/CMakeLists.txt.no_undefined jreen-1.2.1/CMakeLists.txt
+--- jreen-1.2.1/CMakeLists.txt.no_undefined	2015-02-07 14:10:11.000000000 -0600
++++ jreen-1.2.1/CMakeLists.txt	2015-11-15 06:22:34.613365946 -0600
+@@ -136,6 +136,7 @@ if(SYMBIAN)
+     set(JREEN_BUILD_TYPE STATIC)
+ else()
+ set(JREEN_BUILD_TYPE SHARED)
++set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined")
+ endif()
+ 
+ ADD_LIBRARY(jreen${JREEN_SUFFIX} ${JREEN_BUILD_TYPE} ${SRC} ${MOC_SRC})

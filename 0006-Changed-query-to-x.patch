@@ -1,0 +1,25 @@
+From 814c15ffb838d90ab7aaf5111824877294edb7bf Mon Sep 17 00:00:00 2001
+From: Nicolay Izoderov <nico-izo@ya.ru>
+Date: Tue, 18 Aug 2015 21:27:30 +0300
+Subject: [PATCH 6/8] Changed <query> to <x>
+
+---
+ src/mucroomfactory.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/mucroomfactory.cpp b/src/mucroomfactory.cpp
+index 0bd52b6..c0c17c1 100644
+--- a/src/mucroomfactory.cpp
++++ b/src/mucroomfactory.cpp
+@@ -316,7 +316,7 @@ void MUCRoomUserQueryFactory::handleCharacterData(const QStringRef &text)
+ void MUCRoomUserQueryFactory::serialize(Payload *extension, QXmlStreamWriter *writer)
+ {
+ 	MUCRoomUserQuery *query = se_cast<MUCRoomUserQuery*>(extension);
+-	writer->writeStartElement(QLatin1String("query"));
++	writer->writeStartElement(QLatin1String("x"));
+ 	writer->writeDefaultNamespace(NS_MUCUSER);
+ 	if (query->operation > 0) {
+ 		if (query->operation == MUCRoomUserQuery::Invite)
+-- 
+2.5.0
+
