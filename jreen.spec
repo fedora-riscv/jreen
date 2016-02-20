@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 5%{?dist}
+Release: 6%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -25,6 +25,7 @@ Patch7: 0007-Fixed-parsing-of-time-with-milliseconds-in-UTC-forma.patch
 
 ## upstreamable patches
 Patch100: jreen-1.2.1-no_undefined.patch
+Patch101: jreen-1.2.1-qt56.patch
 
 BuildRequires: cmake
 BuildRequires: libidn-devel
@@ -129,6 +130,9 @@ test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
 %changelog
+* Fri Feb 19 2016 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-6
+- fix build against qt-5.6 (#1307664)
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
