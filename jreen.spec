@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 10%{?dist}
+Release: 11%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -87,8 +87,8 @@ pushd %{_target_platform}-qt5
   ..
 popd
 
-make %{?_smp_mflags} -C %{_target_platform}
-make %{?_smp_mflags} -C %{_target_platform}-qt5
+%make_build -C %{_target_platform}
+%make_build -C %{_target_platform}-qt5
 
 
 %install
@@ -102,8 +102,7 @@ test "$(pkg-config --modversion libjreen)" = "%{version}"
 test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
  
 %files 
 %doc AUTHORS ChangeLog README.md
@@ -115,8 +114,7 @@ test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 %{_libdir}/libjreen.so
 %{_libdir}/pkgconfig/libjreen.pc
 
-%post qt5 -p /sbin/ldconfig
-%postun qt5 -p /sbin/ldconfig
+%ldconfig_scriptlets qt5
 
 %files qt5
 %doc AUTHORS ChangeLog README.md
@@ -130,6 +128,9 @@ test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
 %changelog
+* Thu Jun 28 2018 Rex Dieter <rdieter@fedoraproject.org> - 1.2.1-11
+- use %%make_build %%ldconfig_scriptlets
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.1-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
