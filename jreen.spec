@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 17%{?dist}
+Release: 18%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -69,26 +69,21 @@ rm -rfv 3rdparty/{jdns,simplesasl}
 
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
-%{cmake} \
+%global _vpath_builddir %{_target_platform}
+%cmake .. \
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=ON \
-  -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  ..
-popd
+  -DJREEN_USE_SYSTEM_JDNS:BOOL=ON
 
-mkdir %{_target_platform}-qt5
-pushd %{_target_platform}-qt5
-%{cmake} \
+%cmake_build
+
+%global _vpath_builddir %{_target_platform}-qt5
+%{cmake} .. \
   -DCMAKE_BUILD_TYPE:STRING="Release" \
   -DJREEN_FORCE_QT4:BOOL=OFF \
-  -DJREEN_USE_SYSTEM_JDNS:BOOL=ON \
-  ..
-popd
+  -DJREEN_USE_SYSTEM_JDNS:BOOL=ON
 
-%make_build -C %{_target_platform}
-%make_build -C %{_target_platform}-qt5
+%cmake_build
 
 
 %install
@@ -128,6 +123,9 @@ test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
 %changelog
+* Mon Sep 07 2020 Than Ngo <than@redhat.com> - 1.2.1-18
+- Fixed FTBFS
+
 * Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.1-17
 - Second attempt - Rebuilt for
   https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
