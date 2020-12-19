@@ -35,6 +35,7 @@ BuildRequires: pkgconfig(QtNetwork)
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(speex)
 BuildRequires: zlib-devel
+BuildRequires: make
 
 # apparently dlopens libidn
 Requires: libidn%{?_isa}
