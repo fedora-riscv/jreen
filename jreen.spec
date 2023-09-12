@@ -2,7 +2,7 @@
 Name:    jreen
 Summary: Qt4 XMPP Library
 Version: 1.2.1
-Release: 23%{?dist}
+Release: 23.rv64%{?dist}
  
 License: GPLv2+
 #URL:     http://qutim.org/jreen
@@ -27,10 +27,13 @@ Patch7: 0007-Fixed-parsing-of-time-with-milliseconds-in-UTC-forma.patch
 Patch100: jreen-1.2.1-no_undefined.patch
 Patch101: jreen-1.2.1-qt56.patch
 
+Patch200: 0001-Fix-requrirement-to-qtdns-qt4.patch
+
+
 BuildRequires: cmake
 BuildRequires: libidn-devel
 BuildRequires: pkgconfig(libgsasl)
-BuildRequires: pkgconfig(qjdns)
+BuildRequires: pkgconfig(qjdns-qt4)
 BuildRequires: pkgconfig(QtNetwork) 
 BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(speex)
@@ -124,6 +127,9 @@ test "$(pkg-config --modversion libjreen-qt5)" = "%{version}"
 
  
 %changelog
+* Tue Sep 12 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 1.2.1-23.rv64
+- Fix build on Fedora 38.
+
 * Thu Jan 19 2023 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.1-23
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
 
