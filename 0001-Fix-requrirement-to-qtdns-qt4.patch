@@ -1,0 +1,25 @@
+From 786697b36dca9b740bd17b6a54f98b135f5bed50 Mon Sep 17 00:00:00 2001
+From: Liu Yang <Yang.Liu.sn@gmail.com>
+Date: Tue, 12 Sep 2023 04:01:04 -0400
+Subject: [PATCH] Fix requrirement to qtdns-qt4.
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b8c4038..fe988eb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -118,7 +118,7 @@ if(NOT Qt5Core_DIR)
+         if(NOT LINUX)
+                 find_package(PkgConfig)
+         endif()
+-        pkg_search_module(JDNS REQUIRED qjdns)
++        pkg_search_module(JDNS REQUIRED qjdns-qt4)
+         include_directories(${JDNS_INCLUDE_DIR})
+         list(APPEND EXTRA_LIBS ${JDNS_LIBRARIES})
+     else()
+-- 
+2.41.0
+
